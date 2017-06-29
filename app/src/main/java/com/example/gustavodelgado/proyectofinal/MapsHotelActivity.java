@@ -225,21 +225,27 @@ public class MapsHotelActivity extends AppCompatActivity implements OnMapReadyCa
         try {
             if(coder.isPresent()) {
                 addresses = coder.getFromLocationName(addresHotel, 5);
-                if(addresses==null){
-                    return;
-                }
                 Log.e("ADDRESS", "" + addresses);
-                Address location = addresses.get(0);
-                double lat = location.getLatitude();
-                double lng = location.getLongitude();
-                Log.e("Lat", "" + lat);
-                Log.e("Lng", "" + lng);
-                LatLng latLng = new LatLng(lat, lng);
-                //MarkerOptions markerOptions = new MarkerOptions();
-                //markerOptions.position(latLng);
-                //mMap.addMarker(markerOptions);
-                mMap.addMarker(new MarkerOptions().position(latLng).title(NameHotel));
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
+
+                if(addresses!=null || addresses.isEmpty() || addresses.size()<0 ){
+
+                    Log.e("ENTROADDRES", "" + addresses);
+                    Address location = addresses.get(0);
+                    double lat = location.getLatitude();
+                    double lng = location.getLongitude();
+                    Log.e("Lat", "" + lat);
+                    Log.e("Lng", "" + lng);
+                    LatLng latLng = new LatLng(lat, lng);
+                    //MarkerOptions markerOptions = new MarkerOptions();
+                    //markerOptions.position(latLng);
+                    //mMap.addMarker(markerOptions);
+                    mMap.addMarker(new MarkerOptions().position(latLng).title(NameHotel));
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
+                }
+                else {
+                    Log.d("NOENTRO", "onMapReady: ");
+                }
+
             }
             else {
                 Log.d("NOENTRO", "onMapReady: ");
