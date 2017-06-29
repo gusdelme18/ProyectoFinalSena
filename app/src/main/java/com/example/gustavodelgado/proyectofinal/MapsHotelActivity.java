@@ -68,6 +68,7 @@ public class MapsHotelActivity extends AppCompatActivity implements OnMapReadyCa
         mMap.getMapAsync(this);
         // get Data Hoteles for maps
 
+
         mDatabaseReference = FirebaseDatabase.getInstance().getReference(FB_CHILD_QUERY);
         Query hotelist = mDatabaseReference.orderByChild("idCity").equalTo(idCity);
 
@@ -130,7 +131,13 @@ public class MapsHotelActivity extends AppCompatActivity implements OnMapReadyCa
             if(coder.isPresent()) {
                 addresses = coder.getFromLocationName(addresHotel, 5);
 
-                if(addresses!=null  && addresses.isEmpty()  && addresses.size() > 0){
+
+
+                if(addresses!=null   && addresses.size() > 0){
+                    Log.d("ENTRO", "onMapReady: ");
+                    Log.e("addresses", String.valueOf(addresses));
+
+
 
                     Address location = addresses.get(0);
                     double lat = location.getLatitude();
