@@ -42,12 +42,12 @@ public class SitiosTModel {
         this.imagen = imagen;
     }
 
-    public String getIdHotel() {
+    public String getIdSitio() {
         return idSitio;
     }
 
-    public void setIdHotel(String idHotel) {
-        this.idSitio = idHotel;
+    public void setIdSitio(String idSitio) {
+        this.idSitio = idSitio;
     }
 
     public String getIdCity() {

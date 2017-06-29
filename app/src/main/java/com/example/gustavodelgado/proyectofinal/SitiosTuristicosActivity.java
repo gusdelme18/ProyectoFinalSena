@@ -106,8 +106,8 @@ public class SitiosTuristicosActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         //Log.w( "You clicked on "+position);
-                        Intent intent = new Intent(getApplicationContext(), DetalleHotelesActivity.class);
-                        intent.putExtra("idSitio", ""+ model.getIdHotel());
+                        Intent intent = new Intent(getApplicationContext(), DetalleSitioTurisActivity.class);
+                        intent.putExtra("idSitio", ""+ model.getIdSitio());
                         intent.putExtra("name", model.getName());
                         startActivity(intent);
 
