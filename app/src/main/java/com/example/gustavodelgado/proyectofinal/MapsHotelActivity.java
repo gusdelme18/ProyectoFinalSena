@@ -37,7 +37,7 @@ import java.util.Map;
 public class MapsHotelActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap ;
-    public String idCity,NameHotel;
+    public String idCity,NameHotel,FB_CHILD_QUERY;
     DatabaseReference mDatabaseReference;
 
     @Override
@@ -48,6 +48,7 @@ public class MapsHotelActivity extends AppCompatActivity implements OnMapReadyCa
         Intent intent = getIntent();
         idCity = intent.getStringExtra("idCity");
         NameHotel = intent.getStringExtra("name");
+        FB_CHILD_QUERY = intent.getStringExtra("FB_CHILD_QUERY");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -65,12 +66,9 @@ public class MapsHotelActivity extends AppCompatActivity implements OnMapReadyCa
         SupportMapFragment mMap = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mMap.getMapAsync(this);
-
-
-
         // get Data Hoteles for maps
 
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference("hoteles");
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference(FB_CHILD_QUERY);
         Query hotelist = mDatabaseReference.orderByChild("idCity").equalTo(idCity);
 
         hotelist.addValueEventListener(new ValueEventListener() {
@@ -95,10 +93,6 @@ public class MapsHotelActivity extends AppCompatActivity implements OnMapReadyCa
 
             }
         });
-
-
-
-
 
     }
 
@@ -129,27 +123,19 @@ public class MapsHotelActivity extends AppCompatActivity implements OnMapReadyCa
         Geocoder coder = new Geocoder(getBaseContext(), Locale.getDefault());
         String addresHotel = " " +address+", "+NameCity+", Valle del Cauca, Colombia";
        // String addresHotel = "731 Market St, San Francisco, CA";
-        Log.e("AddressHotel", addresHotel);
 
         List<Address> addresses = null;
 
         try {
             if(coder.isPresent()) {
                 addresses = coder.getFromLocationName(addresHotel, 5);
-                Log.e("ADDRESS", "" + addresses);
 
                 if(addresses!=null  && addresses.isEmpty()  && addresses.size() > 0){
 
-                    Log.e("ENTROADDRES", "" + addresses);
                     Address location = addresses.get(0);
                     double lat = location.getLatitude();
                     double lng = location.getLongitude();
-                    Log.e("Lat", "" + lat);
-                    Log.e("Lng", "" + lng);
                     LatLng latLng = new LatLng(lat, lng);
-                    //MarkerOptions markerOptions = new MarkerOptions();
-                    //markerOptions.position(latLng);
-                    //mMap.addMarker(markerOptions);
                     mMap.addMarker(new MarkerOptions().position(latLng).title(NameHotel));
                     mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 12));
                 }
@@ -164,14 +150,9 @@ public class MapsHotelActivity extends AppCompatActivity implements OnMapReadyCa
             }
         } catch (IOException e) {
 
-            Log.i("ADDRESS", "" + addresses);
             e.printStackTrace();
-            Log.e("ErrorAddres", "onMapReady: ",e );
             //System.out.print(e.printStackTrace());
         }
-        Log.d("ENTRO", "onMapReady: ");
 
     }
-
-
 }

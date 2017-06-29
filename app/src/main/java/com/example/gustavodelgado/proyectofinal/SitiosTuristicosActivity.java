@@ -120,9 +120,6 @@ public class SitiosTuristicosActivity extends AppCompatActivity {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(adapter);
 
-
-
-
     }
 
 
@@ -141,7 +138,7 @@ public class SitiosTuristicosActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), MapsHotelActivity.class);
             intent.putExtra("idCity", ""+ idCity);
             intent.putExtra("name", ""+ name);
-
+            intent.putExtra("FB_CHILD_QUERY", ""+ SITIOS_TURISTICOS);
             startActivity(intent);
             return true;
         }

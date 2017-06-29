@@ -35,6 +35,7 @@ public class Hoteles extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private StaggeredGridLayoutManager mLayoutManager;
     private TextView txHoteles;
+    private static final String FB_HOTELES = "hoteles";
 
     //Getting reference to Firebase Database
 
@@ -58,7 +59,6 @@ public class Hoteles extends AppCompatActivity {
         findViewById(R.id.fab_menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(Hoteles.this, "Clicked add Hotel", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), AddHotelesActivity.class);
                 intent.putExtra("idCity", ""+idCity);
                 startActivity(intent);
@@ -91,10 +91,9 @@ public class Hoteles extends AppCompatActivity {
         mLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        mDatabaseReference = FirebaseDatabase.getInstance().getReference("hoteles");
+        mDatabaseReference = FirebaseDatabase.getInstance().getReference(FB_HOTELES);
         Query hotelist = mDatabaseReference.orderByChild("idCity").equalTo(idCity);
 
-//        System.out.print( mDatabaseReference.child("hoteles").orderByChild("idCity").equalTo(1));
         System.out.print( mDatabaseReference);
 
 
@@ -115,9 +114,6 @@ public class Hoteles extends AppCompatActivity {
                 Picasso.with(Hoteles.this).load(model.getImagen()).into(viewHolder.imHotel);
                 }
 
-
-
-
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -126,7 +122,7 @@ public class Hoteles extends AppCompatActivity {
                         intent.putExtra("idHotel", ""+ model.getIdHotel());
                         intent.putExtra("name", model.getName());
                         startActivity(intent);
-                        Toast.makeText(getApplicationContext(), "Item clicked at " + model.getName(), Toast.LENGTH_SHORT).show();
+
                     }
                 });
 
@@ -135,10 +131,6 @@ public class Hoteles extends AppCompatActivity {
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(adapter);
-
-
-
-
     }
 
 
@@ -176,6 +168,7 @@ public class Hoteles extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), MapsHotelActivity.class);
             intent.putExtra("idCity", ""+ idCity);
             intent.putExtra("name", ""+ name);
+            intent.putExtra("FB_CHILD_QUERY", ""+ FB_HOTELES);
 
             startActivity(intent);
             return true;
