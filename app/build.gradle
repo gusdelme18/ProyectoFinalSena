@@ -56,7 +56,10 @@ dependencies {
     compile 'com.google.android.gms:play-services:11.0.1'
     compile 'com.sa90.materialarcmenu:library:1.4'
     testCompile 'junit:junit:4.12'
+    implementation 'com.google.firebase:firebase-storage:11.0.1'
+    implementation 'com.google.firebase:firebase-auth:11.0.1'
 }
+
 
 
 

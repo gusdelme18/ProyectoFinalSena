@@ -100,7 +100,7 @@
 
 
             <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_delete"
+                android:id="@+id/fab_gallery"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 fab:fab_colorNormal="@color/colorPrimary"
@@ -110,7 +110,7 @@
                 fab:fab_title="Eliminar" />
 
             <com.getbase.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_update"
+                android:id="@+id/fab_camera"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 fab:fab_colorNormal="@color/colorPrimary"
