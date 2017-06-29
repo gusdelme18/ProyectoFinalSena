@@ -223,7 +223,7 @@ public class DetalleOperadorActivity extends AppCompatActivity {
     public void onclicEmail(View v){
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("message/rfc822");
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"name@email.com"});
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{EmailSitio});
         intent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
         intent.putExtra(Intent.EXTRA_TEXT, "Message");
         Intent mailer = Intent.createChooser(intent, null);
