@@ -83,6 +83,8 @@ public class AddSitiosTuristicosActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        getSupportActionBar().setTitle("Añadir Sitios turistico");
+
         toolbar.setNavigationIcon(android.support.v7.appcompat.R.drawable.abc_ic_ab_back_material);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,7 +137,6 @@ public class AddSitiosTuristicosActivity extends AppCompatActivity {
 
     public void onClickSaveSitio (View v){
 
-        progressDialog.show();
 
         if (imageuri != null) {
             //displaying a progress dialog while upload is going on
@@ -154,7 +155,7 @@ public class AddSitiosTuristicosActivity extends AppCompatActivity {
                             progressDialog.dismiss();
 
                             //and displaying a success toast
-                            Toast.makeText(getApplicationContext(), "File Uploaded ", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Save data", Toast.LENGTH_LONG).show();
 
                             Uri downloadUrl =taskSnapshot.getDownloadUrl();
                             String uid = mDatabaseReference.child(FB_SITIOS_TURISTICOS).push().getKey();
@@ -169,6 +170,8 @@ public class AddSitiosTuristicosActivity extends AppCompatActivity {
                             newSittioT.child("imagen").setValue(downloadUrl.toString());
                             newSittioT.child("idCity").setValue(idCity);
                             newSittioT.child("idSitio").setValue(uid);
+
+                            onBackPressed();
 
                         }
                     })
@@ -196,6 +199,10 @@ public class AddSitiosTuristicosActivity extends AppCompatActivity {
         }
         //if there is not any file
         else {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage("Saving data...");
+
+            progressDialog.show();
             //you can display an error toast
 
             // get data for Form

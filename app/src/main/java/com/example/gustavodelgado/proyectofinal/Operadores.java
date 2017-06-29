@@ -49,7 +49,7 @@ public class Operadores extends AppCompatActivity {
         findViewById(R.id.fab_menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), AddHotelesActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AddOperadoresActivity.class);
                 intent.putExtra("idCity", ""+idCity);
                 startActivity(intent);
             }
@@ -107,7 +107,7 @@ public class Operadores extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         //Log.w( "You clicked on "+position);
-                        Intent intent = new Intent(getApplicationContext(), DetalleSitioTurisActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), DetalleOperadorActivity.class);
                         intent.putExtra("idOperador", ""+ model.getIdOperador());
                         intent.putExtra("name", model.getName());
                         startActivity(intent);

@@ -91,7 +91,8 @@
         <activity android:name=".DetalleSitioTurisActivity" />
         <activity android:name=".EditSitioActivity" />
         <activity android:name=".DetalleOperadorActivity" />
-        <activity android:name=".EditOperadorActivity"></activity>
+        <activity android:name=".EditOperadorActivity" />
+        <activity android:name=".AddOperadoresActivity"></activity>
     </application>
 
 </manifest>

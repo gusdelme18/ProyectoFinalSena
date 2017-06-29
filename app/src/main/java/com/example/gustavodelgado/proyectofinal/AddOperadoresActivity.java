@@ -5,25 +5,21 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputEditText;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.gustavodelgado.proyectofinal.Model.HotelesModel;
+import com.example.gustavodelgado.proyectofinal.Model.OperadoresModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseError;
@@ -34,17 +30,13 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Random;
 
-import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
-
-public class AddHotelesActivity extends AppCompatActivity {
+public class AddOperadoresActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabaseReference;
     private EditText editName, editPhone, editWebsite, editImage, editAddress, editEmail;
@@ -53,19 +45,11 @@ public class AddHotelesActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     private static final int PICK_IMAGE_REQUEST = 234;
     private static final int CAMERA_REQUEST_CODE = 1;
-    public static final int MEDIA_TYPE_IMAGE = 1;
+    private static final String FB_SITIOS_TURISTICOS = "operadores_turisticos";
 
-    // Activity request codes
-    private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
-    private static final int CAMERA_CAPTURE_VIDEO_REQUEST_CODE = 200;
-
-    public static final int MEDIA_TYPE_VIDEO = 2;
-
-    // directory name to store captured images and videos
     private static final String IMAGE_DIRECTORY_NAME = "Proyecto Sena";
     //a Uri object to store file path
     private Uri imageuri;
-    String mCurrentPhotoPath;
 
     private ImageView imageView;
     private DatabaseReference mDatabase;
@@ -73,12 +57,10 @@ public class AddHotelesActivity extends AppCompatActivity {
 
     File photoFile = null;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_hoteles);
+        setContentView(R.layout.activity_add_operadores);
 
 
         //initializing database reference
@@ -94,16 +76,14 @@ public class AddHotelesActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         idCity = intent.getStringExtra("idCity");
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Saving data...");
 
         mStorage = FirebaseStorage.getInstance().getReference();
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("hoteles");
+        mDatabase = FirebaseDatabase.getInstance().getReference().child(FB_SITIOS_TURISTICOS);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("Añadir Hotel");
+        getSupportActionBar().setTitle("Añadir Operador turistico");
 
         toolbar.setNavigationIcon(android.support.v7.appcompat.R.drawable.abc_ic_ab_back_material);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -136,7 +116,6 @@ public class AddHotelesActivity extends AppCompatActivity {
 
                     try {
 
-
                         //imageuri = FileProvider.getUriForFile(getBaseContext(),"com.example.android.fileprovider",createImageFile());
                         photoFile =createImageFile();
 
@@ -151,15 +130,14 @@ public class AddHotelesActivity extends AppCompatActivity {
 
                     }
                 }
-
             }
 
         });
     }
 
-    public void onClickSaveHotel (View v){
+    public void onClickSaveSitio (View v){
 
-        //progressDialog.show();
+
 
         if (imageuri != null) {
             //displaying a progress dialog while upload is going on
@@ -168,7 +146,7 @@ public class AddHotelesActivity extends AppCompatActivity {
             progressDialog.show();
 
             //StorageReference riversRef = storageReference.child("images/pic.jpg");
-            StorageReference riversRef = mStorage.child("hoteles").child(imageuri.getLastPathSegment());
+            StorageReference riversRef = mStorage.child(FB_SITIOS_TURISTICOS).child(imageuri.getLastPathSegment());
             riversRef.putFile(imageuri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -178,21 +156,22 @@ public class AddHotelesActivity extends AppCompatActivity {
                             progressDialog.dismiss();
 
                             //and displaying a success toast
-                            Toast.makeText(getApplicationContext(), "File Uploaded ", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Save data ", Toast.LENGTH_LONG).show();
 
                             Uri downloadUrl =taskSnapshot.getDownloadUrl();
-                            String uid = mDatabaseReference.child("hoteles").push().getKey();
+                            String uid = mDatabaseReference.child(FB_SITIOS_TURISTICOS).push().getKey();
 
-                            DatabaseReference newHotel = mDatabase.push();
-                            newHotel.child("address").setValue( editAddress.getText().toString().trim());
-                            newHotel.child("name").setValue(editName.getText().toString().trim());
-                            newHotel.child("phone").setValue(editPhone.getText().toString().trim());
-                            newHotel.child("website").setValue(editWebsite.getText().toString().trim());
-                            newHotel.child("email").setValue(editEmail.getText().toString().trim());
-                            newHotel.child("name").setValue(editName.getText().toString().trim());
-                            newHotel.child("imagen").setValue(downloadUrl.toString());
-                            newHotel.child("idCity").setValue(idCity);
-                            newHotel.child("idHotel").setValue(uid);
+                            DatabaseReference newSittioT = mDatabase.push();
+                            newSittioT.child("address").setValue( editAddress.getText().toString().trim());
+                            newSittioT.child("name").setValue(editName.getText().toString().trim());
+                            newSittioT.child("phone").setValue(editPhone.getText().toString().trim());
+                            newSittioT.child("website").setValue(editWebsite.getText().toString().trim());
+                            newSittioT.child("email").setValue(editEmail.getText().toString().trim());
+                            newSittioT.child("name").setValue(editName.getText().toString().trim());
+                            newSittioT.child("imagen").setValue(downloadUrl.toString());
+                            newSittioT.child("idCity").setValue(idCity);
+                            newSittioT.child("idOperador").setValue(uid);
+
                             onBackPressed();
 
                         }
@@ -222,12 +201,14 @@ public class AddHotelesActivity extends AppCompatActivity {
         //if there is not any file
         else {
             //you can display an error toast
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage("Saving data...");
+
             progressDialog.show();
-
             // get data for Form
-            String uid = mDatabaseReference.child("hoteles").push().getKey();
+            String uid = mDatabaseReference.child(FB_SITIOS_TURISTICOS).push().getKey();
 
-            HotelesModel hotelesModel =  new HotelesModel(
+            OperadoresModel operadoresModel =  new OperadoresModel(
                     editAddress.getText().toString().trim(),
                     editName.getText().toString().trim(),
                     editPhone.getText().toString().trim(),
@@ -239,7 +220,7 @@ public class AddHotelesActivity extends AppCompatActivity {
 
 
             //referring to movies node and setting the values from movie object to that location
-            mDatabaseReference.child("hoteles").push().setValue(hotelesModel, new DatabaseReference.CompletionListener() {
+            mDatabaseReference.child(FB_SITIOS_TURISTICOS).push().setValue(operadoresModel, new DatabaseReference.CompletionListener() {
                 @Override
                 public void onComplete(DatabaseError databaseError, DatabaseReference databaseReference) {
                     if (databaseError != null) {
@@ -282,11 +263,11 @@ public class AddHotelesActivity extends AppCompatActivity {
 
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
 
-           Log.e("ExternalStorageimageuri", " " + imageuri + ":");
+            Log.e("ExternalStorageimageuri", " " + imageuri + ":");
 
 
-                final Bitmap myBitmap = BitmapFactory.decodeFile(imageuri.getPath());
-                imageView.setImageBitmap(myBitmap);
+            final Bitmap myBitmap = BitmapFactory.decodeFile(imageuri.getPath());
+            imageView.setImageBitmap(myBitmap);
 
 
             Log.e("ExternalStoragephotoFile", " " + imageuri + ":");
@@ -320,12 +301,8 @@ public class AddHotelesActivity extends AppCompatActivity {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
                 Locale.getDefault()).format(new Date());
         File mediaFile;
-            mediaFile = new File(mediaStorageDir.getPath() + File.separator
-                    + "IMG_" + timeStamp + ".jpg");
-
-        Log.e("mediaFile", "mediaFile "
-                + mediaFile + " directory");
-
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator
+                + "IMG_" + timeStamp + ".jpg");
 
         return mediaFile;
 

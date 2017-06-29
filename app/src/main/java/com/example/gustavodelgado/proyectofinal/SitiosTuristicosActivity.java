@@ -50,7 +50,7 @@ public class SitiosTuristicosActivity extends AppCompatActivity {
         findViewById(R.id.fab_menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), AddHotelesActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AddSitiosTuristicosActivity.class);
                 intent.putExtra("idCity", ""+idCity);
                 startActivity(intent);
             }
@@ -59,7 +59,7 @@ public class SitiosTuristicosActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setTitle("Sitios tusristicos en "+name);
+        getSupportActionBar().setTitle("Sitios turistico en "+name);
 
         toolbar.setNavigationIcon(android.support.v7.appcompat.R.drawable.abc_ic_ab_back_material);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
