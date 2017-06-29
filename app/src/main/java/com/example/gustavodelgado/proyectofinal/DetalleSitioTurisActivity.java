@@ -15,7 +15,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.gustavodelgado.proyectofinal.Model.SitiosTModel;
 import com.google.firebase.database.ChildEventListener;
@@ -120,7 +119,6 @@ public class DetalleSitioTurisActivity extends AppCompatActivity {
 
                 }
 
-
                 phone.setText(sitiosTModel.getPhone().toString());
                 phoneCall =sitiosTModel.getPhone().toString();
                 map.setText(sitiosTModel.getAddress().toString());
@@ -155,7 +153,7 @@ public class DetalleSitioTurisActivity extends AppCompatActivity {
         findViewById(R.id.fab_update).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), EditHotelActivity.class);
+                Intent intent = new Intent(getApplicationContext(), EditSitioActivity.class);
                 intent.putExtra("idSitio",idSitio);
                 startActivity(intent);
             }
