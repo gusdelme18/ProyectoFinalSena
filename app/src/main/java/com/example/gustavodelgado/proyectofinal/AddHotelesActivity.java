@@ -1,8 +1,10 @@
 package com.example.gustavodelgado.proyectofinal;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
@@ -37,21 +39,30 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
+
+import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
 
 public class AddHotelesActivity extends AppCompatActivity {
 
     private DatabaseReference mDatabaseReference;
     private EditText editName, editPhone, editWebsite, editImage, editAddress, editEmail;
-    private Button bSubmit;
+
     public String idCity;
     ProgressDialog progressDialog;
     private static final int PICK_IMAGE_REQUEST = 234;
-    private StorageReference storage;
-    private static final int GALLERY_INTENT = 2;
     private static final int CAMERA_REQUEST_CODE = 1;
-    private static final int PHOTO_REQUEST = 111;
-    private static final int REQUEST_IMAGE_CAPTURE = 111;
+    public static final int MEDIA_TYPE_IMAGE = 1;
+
+    // Activity request codes
+    private static final int CAMERA_CAPTURE_IMAGE_REQUEST_CODE = 100;
+    private static final int CAMERA_CAPTURE_VIDEO_REQUEST_CODE = 200;
+
+    public static final int MEDIA_TYPE_VIDEO = 2;
+
+    // directory name to store captured images and videos
+    private static final String IMAGE_DIRECTORY_NAME = "Hello Camera";
     //a Uri object to store file path
     private Uri imageuri;
     String mCurrentPhotoPath;
@@ -59,6 +70,8 @@ public class AddHotelesActivity extends AppCompatActivity {
     private ImageView imageView;
     private DatabaseReference mDatabase;
     private StorageReference mStorage;
+
+    File photoFile = null;
 
 
 
@@ -113,35 +126,36 @@ public class AddHotelesActivity extends AppCompatActivity {
         findViewById(R.id.fab_camera).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-                Random random = new Random();
-                int key =random.nextInt(1000);
-                File photo = new File(Environment.getExternalStorageDirectory(), "picture"+key+".jpg");
-                //  File photo = new File(getCacheDir(), "picture.jpg");
-                imageuri = Uri.fromFile(photo);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageuri);
-                if (intent.resolveActivity(getBaseContext().getPackageManager()) != null) {
-                    startActivityForResult(intent, REQUEST_IMAGE_CAPTURE);
-                }
-*/
 
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getBaseContext().getPackageManager()) != null) {
-                    startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
+                // Ensure that there's a camera activity to handle the intent
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                    // Create the File where the photo should go
+
+                    try {
+                        photoFile = createImageFile();
+
+                    } catch (IOException ex) {
+                        // Error occurred while creating the File
+
+                    }
+                    // Continue only if the File was successfully created
+                    if (photoFile != null) {
+                       // imageuri = FileProvider.getUriForFile(getBaseContext(),"com.example.android.fileprovider",photoFile);
+
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoFile);
+                        startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
+                    }
                 }
 
             }
 
         });
-
-
     }
 
     public void onClickSaveHotel (View v){
 
         progressDialog.show();
-
 
         if (imageuri != null) {
             //displaying a progress dialog while upload is going on
@@ -150,7 +164,7 @@ public class AddHotelesActivity extends AppCompatActivity {
             progressDialog.show();
 
             //StorageReference riversRef = storageReference.child("images/pic.jpg");
-            StorageReference riversRef = mStorage.child("Photos").child(imageuri.getLastPathSegment());
+            StorageReference riversRef = mStorage.child("hoteles").child(imageuri.getLastPathSegment());
             riversRef.putFile(imageuri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
@@ -214,7 +228,8 @@ public class AddHotelesActivity extends AppCompatActivity {
                     editWebsite.getText().toString().trim(),
                     editImage.getText().toString().trim(),
                     idCity,
-                    uid );
+                    uid,
+                    editEmail.getText().toString().trim() );
 
 
             //referring to movies node and setting the values from movie object to that location
@@ -233,27 +248,16 @@ public class AddHotelesActivity extends AppCompatActivity {
 
                         onBackPressed();
 
-                        editAddress.setText(" ");
-                        editName.setText(" ");
-                        editPhone.setText(" ");
-                        editWebsite.setText(" ");
-                        editImage.setText(" ");
-
 
                     }
                 }
             });*/
         }
 
-
-
-
-
-
-
     }
 
     //handling the image chooser activity result
+    @SuppressLint("LongLogTag")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -272,15 +276,93 @@ public class AddHotelesActivity extends AppCompatActivity {
 
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
 
-            Bundle extras = data.getExtras();
-            imageuri = data.getData();
-
             Log.e("ExternalStorageimageuri", "Scanned" + imageuri + ":");
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            imageView.setImageBitmap(imageBitmap);
+
+
+            /*Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
+            imageView.setImageBitmap(imageBitmap);*/
+
+            //File imgFile = new  File(mCurrentPhotoPath);
+
+           // Log.e("ExternalStorageimageuri", "imgFile" + imgFile + ":");
+
+            //if(imgFile.exists()){
+                // bimatp factory
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                // downsizing image as it throws OutOfMemory Exception for larger
+                // images
+                options.inSampleSize = 8;
+                final Bitmap myBitmap = BitmapFactory.decodeFile(photoFile.getPath(),
+                        options);
+               // Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getPath());
+                imageView.setImageBitmap(myBitmap);
+
+            //}
+
+
+            Log.e("ExternalStorageimageuri", "Scanned" + photoFile + ":");
+
 
         }
     }
 
+    private File createImageFile() throws IOException {
+
+
+        // External sdcard location
+        File mediaStorageDir = new File(
+                Environment
+                        .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                IMAGE_DIRECTORY_NAME);
+
+        // Create the storage directory if it does not exist
+        if (!mediaStorageDir.exists()) {
+            if (!mediaStorageDir.mkdirs()) {
+                Log.d(IMAGE_DIRECTORY_NAME, "Oops! Failed create "
+                        + IMAGE_DIRECTORY_NAME + " directory");
+                return null;
+            }
+        }
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
+                Locale.getDefault()).format(new Date());
+        File mediaFile;
+            mediaFile = new File(mediaStorageDir.getPath() + File.separator
+                    + "IMG_" + timeStamp + ".jpg");
+
+
+        return mediaFile;
+/*
+
+
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + ".png";
+        File storageDir =  new File(Environment.getExternalStoragePublicDirectory(
+                Environment.DIRECTORY_PICTURES), "MyApplication");
+
+        /**Create the storage directory if it does not exist
+        if (! storageDir.exists()){
+            if (! storageDir.mkdirs()){
+                return null;
+            }
+        }
+        /**Create a media file name
+        File file = new File(storageDir.getPath() + File.separator +
+                imageFileName);
+
+        File image = File.createTempFile(
+                imageFileName,  /* prefix
+                ".jpg",         /* suffix
+                storageDir      /* directory
+        );
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = "file://"+image.getAbsolutePath() + "/" + imageFileName;
+        Log.e("mCurrentPhotoPath", " " + mCurrentPhotoPath + ":");
+
+        imageuri = Uri.fromFile(file);
+
+        return file;*/
+    }
 
 }

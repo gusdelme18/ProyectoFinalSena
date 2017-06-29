@@ -9,13 +9,13 @@ import java.util.Map;
 
 public class HotelesModel {
 
-    private String address,name,phone,imagen,idCity,website,idHotel;
+    private String address,name,phone,imagen,idCity,website,idHotel,email;
 
 
     HotelesModel() {
     }
 
-    public HotelesModel(String address,String name, String phone,  String website, String imagen, String idCity, String idHotel) {
+    public HotelesModel(String address,String name, String phone,  String website, String imagen, String idCity, String idHotel,String email) {
         this.address = address;
         this.name = name;
         this.phone = phone;
@@ -23,6 +23,15 @@ public class HotelesModel {
         this.imagen = imagen;
         this.idCity = idCity;
         this.idHotel = idHotel;
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getImagen() {

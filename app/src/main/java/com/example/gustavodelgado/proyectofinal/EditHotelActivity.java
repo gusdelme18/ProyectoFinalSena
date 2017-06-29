@@ -29,7 +29,7 @@ public class EditHotelActivity extends AppCompatActivity {
 
     public String idCity,idHotel,uid;
     DatabaseReference dref;
-    private EditText editName, editPhone, editWebsite, editImage, editAddress;
+    private EditText editName, editPhone, editWebsite, editImage, editAddress,editEmail;
     ProgressDialog progressDialog;
     DatabaseReference mDatabaseReference;
 
@@ -64,7 +64,7 @@ public class EditHotelActivity extends AppCompatActivity {
         editWebsite = (EditText) findViewById(R.id.editText_webSite);
         editImage = (EditText) findViewById(R.id.editText_Imagen);
         editAddress = (EditText) findViewById(R.id.editText_Address);
-
+        editEmail =(EditText) findViewById(R.id.editText_Address);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setMessage("Update data...");
@@ -151,7 +151,8 @@ public class EditHotelActivity extends AppCompatActivity {
                 editWebsite.getText().toString().trim(),
                 editImage.getText().toString().trim(),
                 idCity,
-                idHotel );
+                idHotel,
+                editEmail.getText().toString().trim() );
 
         Map<String, Object> postValues = hotelesModel.toMap();
 
