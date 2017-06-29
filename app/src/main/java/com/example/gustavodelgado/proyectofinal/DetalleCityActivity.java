@@ -96,7 +96,7 @@ public class DetalleCityActivity extends AppCompatActivity {
 
     public void onclickOperador(View view){
 
-        Intent intent = new Intent(getApplicationContext(), DetalleCityActivity.class);
+        Intent intent = new Intent(getApplicationContext(), Operadores.class);
         intent.putExtra("id", id);
         intent.putExtra("name", name);
         intent.putExtra("category", "3");

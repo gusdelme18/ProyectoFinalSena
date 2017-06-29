@@ -10,7 +10,9 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.gustavodelgado.proyectofinal.Model.SitiosTModel;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -86,10 +88,10 @@ public class SitiosTuristicosActivity extends AppCompatActivity {
         System.out.print( mDatabaseReference);
 
 
-        FirebaseRecyclerAdapter<SitiosTModel,Hoteles.MovieViewHolder> adapter = new FirebaseRecyclerAdapter<SitiosTModel, Hoteles.MovieViewHolder>(
-                SitiosTModel.class,R.layout.items_board_hoteles,Hoteles.MovieViewHolder.class,Sitioslist) {
+        FirebaseRecyclerAdapter<SitiosTModel,SitiosTuristicosActivity.SitiosViewHolder> adapter = new FirebaseRecyclerAdapter<SitiosTModel, SitiosTuristicosActivity.SitiosViewHolder>(
+                SitiosTModel.class,R.layout.items_board_sitios,SitiosTuristicosActivity.SitiosViewHolder.class,Sitioslist) {
             @Override
-            protected void populateViewHolder(Hoteles.MovieViewHolder viewHolder, final SitiosTModel model, final int position) {
+            protected void populateViewHolder(SitiosTuristicosActivity.SitiosViewHolder viewHolder, final SitiosTModel model, final int position) {
 
                 if(txHoteles.getVisibility()== View.VISIBLE){
                     txHoteles.setVisibility(View.GONE);
@@ -111,6 +113,7 @@ public class SitiosTuristicosActivity extends AppCompatActivity {
                         intent.putExtra("name", model.getName());
                         startActivity(intent);
 
+
                     }
                 });
 
@@ -121,6 +124,24 @@ public class SitiosTuristicosActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(adapter);
 
     }
+
+    //ViewHolder for our Firebase UI
+    public static class SitiosViewHolder extends RecyclerView.ViewHolder{
+
+        TextView hotelName;
+        ImageView imHotel;
+        View mView;
+
+        public SitiosViewHolder(View v) {
+            super(v);
+            mView = itemView;
+            hotelName = (TextView) v.findViewById(R.id.txtNameHotel);
+            imHotel = (ImageView) v.findViewById(R.id.coverImageView);
+        }
+
+
+    }
+
 
 
     @Override

@@ -146,6 +146,7 @@
                         android:layout_gravity="center_horizontal"
                         android:background="@color/white"
                         android:scaleType="fitCenter"
+                        android:onClick="onclickOperador"
                         app:srcCompat="@drawable/route" />
 
 

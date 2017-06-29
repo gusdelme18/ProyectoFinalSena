@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.gustavodelgado.proyectofinal.Model.OperadoresModel;
@@ -86,10 +87,10 @@ public class Operadores extends AppCompatActivity {
         System.out.print( mDatabaseReference);
 
 
-        FirebaseRecyclerAdapter<OperadoresModel,Hoteles.MovieViewHolder> adapter = new FirebaseRecyclerAdapter<OperadoresModel, Hoteles.MovieViewHolder>(
-                OperadoresModel.class,R.layout.items_board_hoteles,Hoteles.MovieViewHolder.class,Sitioslist) {
+        FirebaseRecyclerAdapter<OperadoresModel,Operadores.OperadorViewHolder> adapter = new FirebaseRecyclerAdapter<OperadoresModel, Operadores.OperadorViewHolder>(
+                OperadoresModel.class,R.layout.items_board_operador,Operadores.OperadorViewHolder.class,Sitioslist) {
             @Override
-            protected void populateViewHolder(Hoteles.MovieViewHolder viewHolder, final OperadoresModel model, final int position) {
+            protected void populateViewHolder(Operadores.OperadorViewHolder viewHolder, final OperadoresModel model, final int position) {
 
                 if(txHoteles.getVisibility()== View.VISIBLE){
                     txHoteles.setVisibility(View.GONE);
@@ -119,6 +120,23 @@ public class Operadores extends AppCompatActivity {
 
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setAdapter(adapter);
+
+    }
+
+    //ViewHolder for our Firebase UI
+    public static class OperadorViewHolder extends RecyclerView.ViewHolder{
+
+        TextView hotelName;
+        ImageView imHotel;
+        View mView;
+
+        public OperadorViewHolder(View v) {
+            super(v);
+            mView = itemView;
+            hotelName = (TextView) v.findViewById(R.id.txtNameHotel);
+            imHotel = (ImageView) v.findViewById(R.id.coverImageView);
+        }
+
 
     }
 

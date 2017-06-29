@@ -98,10 +98,10 @@ public class Hoteles extends AppCompatActivity {
 
 
         //Say Hello to our new FirebaseUI android Element, i.e., FirebaseRecyclerAdapter
-        FirebaseRecyclerAdapter<HotelesModel,MovieViewHolder> adapter = new FirebaseRecyclerAdapter<HotelesModel, MovieViewHolder>(
-                HotelesModel.class,R.layout.items_board_hoteles,MovieViewHolder.class,hotelist) {
+        FirebaseRecyclerAdapter<HotelesModel,HotelViewHolder> adapter = new FirebaseRecyclerAdapter<HotelesModel, HotelViewHolder>(
+                HotelesModel.class,R.layout.items_board_hoteles,HotelViewHolder.class,hotelist) {
             @Override
-            protected void populateViewHolder(MovieViewHolder viewHolder, final HotelesModel model, final int position) {
+            protected void populateViewHolder(HotelViewHolder viewHolder, final HotelesModel model, final int position) {
 
                 if(txHoteles.getVisibility()== View.VISIBLE){
                     txHoteles.setVisibility(View.GONE);
@@ -136,13 +136,13 @@ public class Hoteles extends AppCompatActivity {
 
 
     //ViewHolder for our Firebase UI
-    public static class MovieViewHolder extends RecyclerView.ViewHolder{
+    public static class HotelViewHolder extends RecyclerView.ViewHolder{
 
         TextView hotelName;
         ImageView imHotel;
         View mView;
 
-        public MovieViewHolder(View v) {
+        public HotelViewHolder(View v) {
             super(v);
             mView = itemView;
             hotelName = (TextView) v.findViewById(R.id.txtNameHotel);

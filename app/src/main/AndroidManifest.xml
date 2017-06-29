@@ -89,7 +89,9 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".AddSitiosTuristicosActivity" />
         <activity android:name=".DetalleSitioTurisActivity" />
-        <activity android:name=".EditSitioActivity"></activity>
+        <activity android:name=".EditSitioActivity" />
+        <activity android:name=".DetalleOperadorActivity" />
+        <activity android:name=".EditOperadorActivity"></activity>
     </application>
 
 </manifest>
