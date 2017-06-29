@@ -212,6 +212,56 @@
 
                     </RelativeLayout>
 
+                    <include layout="@layout/item_divider" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:onClick="onclicEmail"
+                        android:padding="@dimen/activity_horizontal_margin">
+
+                        <ImageView
+                            android:id="@+id/ivContactItem6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="39dp"
+                            android:layout_marginRight="39dp"
+                            android:src="@drawable/ic_email_black_36dp"
+                            android:layout_alignBottom="@+id/textView6"
+                            android:layout_toLeftOf="@+id/txtEmail"
+                            android:layout_toStartOf="@+id/txtEmail" />
+
+                        <TextView
+                            android:id="@+id/txtEmail"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="Correo"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                            android:textColor="#212121"
+                            android:layout_alignParentTop="true"
+                            android:layout_alignLeft="@+id/textView6"
+                            android:layout_alignStart="@+id/textView6" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Correo electronico"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                            android:textColor="#727272"
+                            android:layout_marginLeft="73dp"
+                            android:layout_marginStart="73dp"
+                            android:id="@+id/textView6"
+                            android:layout_below="@+id/txtEmail"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true" />
+
+
+                    </RelativeLayout>
+
                     <com.google.android.gms.maps.MapView
                         android:id="@+id/map"
                         android:name="com.google.android.gms.maps.SupportMapFragment"

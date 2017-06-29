@@ -30,9 +30,9 @@ import com.squareup.picasso.Picasso;
 public class DetalleHotelesActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    public String name,idHotel,uid, phoneCall, WebView;
+    public String name,idHotel,uid, phoneCall, WebView, EmailHotel;
     DatabaseReference dref;
-    TextView address,website,phone,map;
+    TextView address,website,phone,map, txtEmail;
     ProgressDialog progressDialog;
 
     @Override
@@ -66,6 +66,7 @@ public class DetalleHotelesActivity extends AppCompatActivity {
         phone = (TextView) findViewById(R.id.txtPhone);
         map = (TextView) findViewById(R.id.txtMap);
         website = (TextView) findViewById(R.id.txtWebsite);
+        txtEmail = (TextView) findViewById(R.id.txtEmail);
 
         // get data for hotel
 
@@ -99,6 +100,8 @@ public class DetalleHotelesActivity extends AppCompatActivity {
                 website.setText(hotelesModel.getWebsite());
                 WebView =hotelesModel.getWebsite();
                 uid =  dataSnapshot.getKey();
+                txtEmail.setText(hotelesModel.getEmail());
+                EmailHotel = hotelesModel.getEmail().toString();
 
                 Log.d(TAG, "onChildAdded: "+ hotelesModel);
 
@@ -127,6 +130,8 @@ public class DetalleHotelesActivity extends AppCompatActivity {
                 website.setText(hotelesModel.getWebsite());
                 WebView =hotelesModel.getWebsite();
                 uid =  dataSnapshot.getKey();
+                txtEmail.setText(hotelesModel.getEmail());
+                EmailHotel = hotelesModel.getEmail().toString();
 
                 Log.d(TAG, "onChildAdded: "+ hotelesModel);
 
@@ -219,5 +224,15 @@ public class DetalleHotelesActivity extends AppCompatActivity {
         }
         startActivity(callIntent);
 
+    }
+
+    public void onclicEmail(View v){
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("message/rfc822");
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"name@email.com"});
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Subject");
+        intent.putExtra(Intent.EXTRA_TEXT, "Message");
+        Intent mailer = Intent.createChooser(intent, null);
+        startActivity(mailer);
     }
 }
