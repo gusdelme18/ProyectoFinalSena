@@ -62,7 +62,7 @@ public class AddHotelesActivity extends AppCompatActivity {
     public static final int MEDIA_TYPE_VIDEO = 2;
 
     // directory name to store captured images and videos
-    private static final String IMAGE_DIRECTORY_NAME = "Hello Camera";
+    private static final String IMAGE_DIRECTORY_NAME = "Proyecto Sena";
     //a Uri object to store file path
     private Uri imageuri;
     String mCurrentPhotoPath;
@@ -133,18 +133,20 @@ public class AddHotelesActivity extends AppCompatActivity {
                     // Create the File where the photo should go
 
                     try {
-                        photoFile = createImageFile();
+
+
+                        //imageuri = FileProvider.getUriForFile(getBaseContext(),"com.example.android.fileprovider",createImageFile());
+                        photoFile =createImageFile();
+
+                        imageuri = FileProvider.getUriForFile(getBaseContext(),
+                                "com.example.android.fileprovider",
+                                photoFile);
+                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageuri);
+                        startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
 
                     } catch (IOException ex) {
                         // Error occurred while creating the File
 
-                    }
-                    // Continue only if the File was successfully created
-                    if (photoFile != null) {
-                       // imageuri = FileProvider.getUriForFile(getBaseContext(),"com.example.android.fileprovider",photoFile);
-
-                        takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoFile);
-                        startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
                     }
                 }
 
@@ -264,7 +266,7 @@ public class AddHotelesActivity extends AppCompatActivity {
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             imageuri = data.getData();
-            Log.e("ExternalStorageimageuri", "Scanned" + imageuri + ":");
+            Log.e("ExternalStorageimageuri", " " + imageuri + ":");
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageuri);
                 imageView.setImageBitmap(bitmap);
@@ -276,31 +278,14 @@ public class AddHotelesActivity extends AppCompatActivity {
 
         if (requestCode == CAMERA_REQUEST_CODE && resultCode == RESULT_OK) {
 
-            Log.e("ExternalStorageimageuri", "Scanned" + imageuri + ":");
+           Log.e("ExternalStorageimageuri", " " + imageuri + ":");
 
 
-            /*Bitmap imageBitmap = (Bitmap) data.getExtras().get("data");
-            imageView.setImageBitmap(imageBitmap);*/
-
-            //File imgFile = new  File(mCurrentPhotoPath);
-
-           // Log.e("ExternalStorageimageuri", "imgFile" + imgFile + ":");
-
-            //if(imgFile.exists()){
-                // bimatp factory
-                BitmapFactory.Options options = new BitmapFactory.Options();
-                // downsizing image as it throws OutOfMemory Exception for larger
-                // images
-                options.inSampleSize = 8;
-                final Bitmap myBitmap = BitmapFactory.decodeFile(photoFile.getPath(),
-                        options);
-               // Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getPath());
+                final Bitmap myBitmap = BitmapFactory.decodeFile(imageuri.getPath());
                 imageView.setImageBitmap(myBitmap);
 
-            //}
 
-
-            Log.e("ExternalStorageimageuri", "Scanned" + photoFile + ":");
+            Log.e("ExternalStoragephotoFile", " " + imageuri + ":");
 
 
         }
@@ -318,10 +303,14 @@ public class AddHotelesActivity extends AppCompatActivity {
         // Create the storage directory if it does not exist
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
-                Log.d(IMAGE_DIRECTORY_NAME, "Oops! Failed create "
+                Log.e(IMAGE_DIRECTORY_NAME, "Oops! Failed create "
                         + IMAGE_DIRECTORY_NAME + " directory");
                 return null;
             }
+        }
+        else {
+            Log.e(IMAGE_DIRECTORY_NAME, "directorio creado  "
+                    + IMAGE_DIRECTORY_NAME + " directory");
         }
         // Create a media file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss",
@@ -330,39 +319,12 @@ public class AddHotelesActivity extends AppCompatActivity {
             mediaFile = new File(mediaStorageDir.getPath() + File.separator
                     + "IMG_" + timeStamp + ".jpg");
 
+        Log.e("mediaFile", "mediaFile "
+                + mediaFile + " directory");
+
 
         return mediaFile;
-/*
 
-
-        // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + ".png";
-        File storageDir =  new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_PICTURES), "MyApplication");
-
-        /**Create the storage directory if it does not exist
-        if (! storageDir.exists()){
-            if (! storageDir.mkdirs()){
-                return null;
-            }
-        }
-        /**Create a media file name
-        File file = new File(storageDir.getPath() + File.separator +
-                imageFileName);
-
-        File image = File.createTempFile(
-                imageFileName,  /* prefix
-                ".jpg",         /* suffix
-                storageDir      /* directory
-        );
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = "file://"+image.getAbsolutePath() + "/" + imageFileName;
-        Log.e("mCurrentPhotoPath", " " + mCurrentPhotoPath + ":");
-
-        imageuri = Uri.fromFile(file);
-
-        return file;*/
     }
 
 }
