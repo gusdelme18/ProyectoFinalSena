@@ -13,4 +13,8 @@
     <string name="hint_nombre">Nombre</string>
     <string name="hint_telefono">Telefono</string>
     <string name="hint_correo">Correo</string>
+    <string name="title_activity_sitios_turisticos">SitiosTuristicosActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>

@@ -26,9 +26,7 @@ public class DetalleCityActivity extends AppCompatActivity {
 
     Toolbar toolbar;
     CollapsingToolbarLayout collapsingToolbarLayout;
-    private AppBarLayout appBarLayout;
-    private Menu collapsedMenu;
-    private boolean appBarExpanded = true;
+
     private String id,name,imagen ;
 
     @Override
@@ -60,14 +58,6 @@ public class DetalleCityActivity extends AppCompatActivity {
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar_layout);
         collapsingToolbarLayout.setTitle(name);
 
-        // Loader image - will be shown before loading image
-        /*int loader = R.drawable.ic_delete;
-        ImageView image = (ImageView) findViewById(R.id.imageHeader);
-        String image_url = "http://www.cali.gov.co/info/principal/media/bloque202741.jpg";
-        ImageLoader imgLoader = new ImageLoader(getApplicationContext());
-        imgLoader.DisplayImage(image_url, loader, image);*/
-
-        // Image link from internet
 
 
         if(TextUtils.isEmpty(imagen)){
@@ -79,39 +69,10 @@ public class DetalleCityActivity extends AppCompatActivity {
 
         }
 
-        //new DownloadImageFromInternet((ImageView) findViewById(R.id.imageHeader))
-          //      .execute(imagen);
-
 
 
     }
 
-    private class DownloadImageFromInternet extends AsyncTask<String, Void, Bitmap> {
-        ImageView imageView;
-
-        public DownloadImageFromInternet(ImageView imageView) {
-            this.imageView = imageView;
-            Toast.makeText(getApplicationContext(), "Please wait, it may take a few minute...", Toast.LENGTH_SHORT).show();
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String imageURL = urls[0];
-            Bitmap bimage = null;
-            try {
-                InputStream in = new java.net.URL(imageURL).openStream();
-                bimage = BitmapFactory.decodeStream(in);
-
-            } catch (Exception e) {
-                Log.e("Error Message", e.getMessage());
-                e.printStackTrace();
-            }
-            return bimage;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            imageView.setImageBitmap(result);
-        }
-    }
 
     public void onclickHotel(View view){
 
@@ -125,7 +86,7 @@ public class DetalleCityActivity extends AppCompatActivity {
 
     public void onclickSitios(View view){
 
-        Intent intent = new Intent(getApplicationContext(), DetalleCityActivity.class);
+        Intent intent = new Intent(getApplicationContext(), SitiosTuristicosActivity.class);
         intent.putExtra("id", id);
         intent.putExtra("name", name);
         intent.putExtra("category", "2");

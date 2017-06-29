@@ -4,25 +4,25 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by gustavodelgado on 27/05/17.
+ * Created by gustavodelgado on 29/06/17.
  */
 
-public class HotelesModel {
+public class SitiosTModel {
 
-    private String address,name,phone,imagen,idCity,website,idHotel,email;
+    private String address,name,phone,imagen,idCity,website,idSitio,email;
 
 
-    HotelesModel() {
+    SitiosTModel() {
     }
 
-    public HotelesModel(String address,String name, String phone,  String website, String imagen, String idCity, String idHotel,String email) {
+    public SitiosTModel(String address,String name, String phone,  String website, String imagen, String idCity, String idSitio,String email) {
         this.address = address;
         this.name = name;
         this.phone = phone;
         this.website = website;
         this.imagen = imagen;
         this.idCity = idCity;
-        this.idHotel = idHotel;
+        this.idSitio = idSitio;
         this.email = email;
     }
 
@@ -43,11 +43,11 @@ public class HotelesModel {
     }
 
     public String getIdHotel() {
-        return idHotel;
+        return idSitio;
     }
 
     public void setIdHotel(String idHotel) {
-        this.idHotel = idHotel;
+        this.idSitio = idHotel;
     }
 
     public String getIdCity() {
@@ -98,7 +98,7 @@ public class HotelesModel {
         result.put("website",website);
         result.put("imagen",imagen);
         result.put("idCity",idCity);
-        result.put("idHotel",idHotel);
+        result.put("idSitio",idSitio);
         result.put("email",email);
         return result;
     }

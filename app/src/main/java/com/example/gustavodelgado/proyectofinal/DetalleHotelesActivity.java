@@ -234,5 +234,12 @@ public class DetalleHotelesActivity extends AppCompatActivity {
         intent.putExtra(Intent.EXTRA_TEXT, "Message");
         Intent mailer = Intent.createChooser(intent, null);
         startActivity(mailer);
+
+        /*
+        Intent testIntent = new Intent(Intent.ACTION_VIEW);
+        Uri data = Uri.parse("mailto:?subject=" + "blah blah subject" + "&body=" + "blah blah body" + "&to=" + "sendme@me.com");
+        testIntent.setData(data);
+        startActivity(testIntent);
+         */
     }
 }
