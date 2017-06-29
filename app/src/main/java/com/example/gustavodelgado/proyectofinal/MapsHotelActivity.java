@@ -227,7 +227,7 @@ public class MapsHotelActivity extends AppCompatActivity implements OnMapReadyCa
                 addresses = coder.getFromLocationName(addresHotel, 5);
                 Log.e("ADDRESS", "" + addresses);
 
-                if(addresses!=null || addresses.isEmpty() || addresses.size()<0 ){
+                if(addresses!=null  && addresses.isEmpty()  && addresses.size() > 0){
 
                     Log.e("ENTROADDRES", "" + addresses);
                     Address location = addresses.get(0);

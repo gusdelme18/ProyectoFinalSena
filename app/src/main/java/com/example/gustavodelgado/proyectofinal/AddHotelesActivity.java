@@ -220,7 +220,7 @@ public class AddHotelesActivity extends AppCompatActivity {
         else {
             //you can display an error toast
 
-            /*/ get data for Form
+            // get data for Form
             String uid = mDatabaseReference.child("hoteles").push().getKey();
 
             HotelesModel hotelesModel =  new HotelesModel(
@@ -253,7 +253,7 @@ public class AddHotelesActivity extends AppCompatActivity {
 
                     }
                 }
-            });*/
+            });
         }
 
     }

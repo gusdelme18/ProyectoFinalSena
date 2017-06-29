@@ -75,6 +75,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/area_telefono"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -91,7 +93,7 @@
             android:id="@+id/txtEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp">
+            android:layout_marginLeft="22dp">
 
             <EditText
                 android:id="@+id/editText_Email"
@@ -109,6 +111,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/area_correo"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -122,7 +126,7 @@
             android:id="@+id/txtAddress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp">
+            android:layout_marginLeft="22dp">
 
             <EditText
                 android:id="@+id/editText_Address"
@@ -140,6 +144,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/area_address"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -148,13 +154,13 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:src="@drawable/ic_web_black_36dp"
-            android:layout_marginLeft="32dp"/>
+            />
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/txtWebsite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp">
+            android:layout_marginLeft="22dp">
 
             <EditText
                 android:id="@+id/editText_webSite"
@@ -172,6 +178,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/area_site"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -185,7 +193,7 @@
             android:id="@+id/txtImagen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp">
+            android:layout_marginLeft="22dp">
 
             <EditText
                 android:id="@+id/editText_Imagen"
