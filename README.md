@@ -7,4 +7,4 @@ Este proyecto se desarrollo con [Android](http://ionicframework.com/docs/).
 
 ### Vista de la aplicación:
 
-![Vista del Home](https://img.youtube.com/vi/H7FI0jH-0io/0.jpg)](https://www.youtube.com/watch?v=H7FI0jH-0io)
+[![Alt text](https://img.youtube.com/vi/H7FI0jH-0io/0.jpg)](https://www.youtube.com/watch?v=H7FI0jH-0io)
